@@ -1,19 +1,20 @@
 //
-//  SinglePostTableViewCell.swift
+//  postCell.swift
 //  Instagram
 //
-//  Created by Phoebe Zhong  on 4/7/21.
+//  Created by Phoebe Zhong  on 4/8/21.
 //  Copyright © 2021 Phoebe Zhong . All rights reserved.
 //
 
 import UIKit
 
-class SinglePostTableViewCell: UITableViewCell {
+class postCell: UITableViewCell {
 
-    @IBOutlet weak var feedIMG: UIImageView!
-    @IBOutlet weak var feedAuthor: UILabel!
-    @IBOutlet weak var feedCaption: UILabel!
+    @IBOutlet weak var helloLabel: UILabel!
     
+    @IBOutlet weak var captionLabel: UILabel!
+    
+    @IBOutlet weak var myPhotoIMG: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

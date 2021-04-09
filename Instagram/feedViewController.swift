@@ -7,6 +7,7 @@
 
 import UIKit
 import Parse
+import AlamofireImage
 
 class feedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -21,11 +22,13 @@ class feedViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         
         feedsTV.dataSource = self
-        feedsTV.delegate = self
+        feedsTV.delegate = self 
         
-        feedsTV.reloadData()
-
-        // Do any additional setup after loading the view.
+        self.feedsTV.reloadData()
+        
+        
+        
+        self.feedsTV.rowHeight = 400;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,20 +38,28 @@ class feedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let myPrototypeCell = feedsTV.dequeueReusableCell(withIdentifier: "SinglePostTableViewCell") as! SinglePostTableViewCell
-
-        let singlePostInCollection = postCollection[indexPath
-            .row]
-
-
-        let tempUser = singlePostInCollection["owner"] as! PFUser
-        myPrototypeCell.feedAuthor.text = tempUser.username
-
-        myPrototypeCell.feedCaption.text = singlePostInCollection["comment"] as? String
-        print(myPrototypeCell.feedCaption.text as Any)
+        //user: PFUser class (type)
+        //image: PFFileObject class (type)
+        //caption: String
         
         
-        return myPrototypeCell
+        let myCell = feedsTV.dequeueReusableCell(withIdentifier: "postCell") as! postCell
+        
+        let onePost = postCollection[indexPath.row]
+        
+        let tempUser = onePost["owner"] as! PFUser
+        myCell.helloLabel.text = tempUser.username
+        
+        myCell.captionLabel.text =  onePost["comment"] as? String
+        
+        let imageFile = onePost["photo"] as! PFFileObject
+        let imgURL = imageFile.url!
+        let feedImgUrl = URL(string: imgURL)!
+        
+        myCell.myPhotoIMG.af.setImage(withURL: feedImgUrl)
+        
+        
+        return myCell
     }
     
     
